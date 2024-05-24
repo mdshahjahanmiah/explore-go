@@ -1,25 +1,24 @@
 package error
 
-import (
-	"fmt"
-	"github.com/pkg/errors"
-)
+import "fmt"
 
 // ServiceError represents an error encountered during service operations.
 type ServiceError struct {
-	Err error
+	StatusCode int
+	Field      string
 	CommonError
 }
 
 // NewServiceError creates a new ServiceError with the provided error and error code.
-func NewServiceError(err error, code string) ServiceError {
+func NewServiceError(err error, code, field string, statusCode int) ServiceError {
 	return ServiceError{
-		Err:         errors.WithStack(err),
+		StatusCode:  statusCode,
+		Field:       field,
 		CommonError: CommonError{Code: code, Message: err.Error()},
 	}
 }
 
 // Error returns the string representation of the ServiceError.
 func (serviceError ServiceError) Error() string {
-	return fmt.Sprintf("Error: %s", serviceError.Message)
+	return fmt.Sprintf("error: %s %s", serviceError.Field, serviceError.Message)
 }

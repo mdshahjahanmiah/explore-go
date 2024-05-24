@@ -68,11 +68,11 @@ func errToErrorObject(id string, err error) *ErrorObject {
 	errObj := &ErrorObject{ID: id}
 
 	switch v := err.(type) {
-	case ServiceError:
+	case TransportError:
 		errObj.Status = http.StatusInternalServerError
 		errObj.Code = v.Code
 		errObj.Detail = v.Message
-	case TransportError:
+	case ServiceError:
 		errObj.Status = v.StatusCode
 		errObj.Code = v.Code
 		errObj.Source = &Source{Field: v.Field, Message: v.Message}
