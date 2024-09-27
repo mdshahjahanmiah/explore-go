@@ -1,2 +1,2 @@
 # explore-go
-A common package using Go that provides essential utilities
+A common package that provides essential utilities using Go
